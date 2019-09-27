@@ -35,15 +35,15 @@ Our Pipeline will do a few things:
 - Build and push the source code into a docker image
 - Push the image to the specified repository
 - Run the image locally
-
+<!-- -->
 - [Install the Pipeline](./pipeline.yaml)
   - The Pipeline will build a docker image with img and deploy it locally via kubectl image.
   - `kubectl apply -f ./docs/getting-started/pipeline.yaml`
-
+<!-- -->
 Our Triggers project will pickup from there:
 - We will setup an EventListener to accept and process Github Push events
 - A TriggerTemplate to create templates Resources and PipelineRun per event received.
-
+<!-- -->
 - [Install the TriggerTemplate, TriggerBinding and EventListener](./triggers.yaml)
   -  First, **edit** the `triggers.yaml` file to reflect
     - The Docker repository to push the image blob
