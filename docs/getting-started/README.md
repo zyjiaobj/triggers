@@ -37,7 +37,7 @@ To get started with Triggers, lets put it to work building and deploying a real 
   - In order to accept Github webhook payloads, our listener must be reachable from the internet.
   - Our EventListener will create a [Loadbalancer Service](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) for us, so we just need to determine its hostname. How the loadbalancer gets created will depend on how you are deploying this getting-started - AWS will behave differently than GCP, and so on.
   - Inspect the output of `k get service/getting-started-listener -n getting-started -o yaml` - there should be a hostname associated with the ingress now.
-  - This command should work to retrieve it: `k get service/getting-started-listener -n getting-started -o json | jq ".status.loadBalancer.ingress[0].hostname"`
+  - This command should retrieve your hostname: `k get service/getting-started-listener -n getting-started -o json | jq ".status.loadBalancer.ingress[0].hostname"`
 
 Now ts time to configure Github webhooks to send *push* events to your clusters Loadbalancer ingress hostname.
 
