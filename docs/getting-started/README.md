@@ -45,11 +45,10 @@ Our Triggers project will pickup from there:
 - A `TriggerTemplate` to create templated PipelineResource and PipelineRun per event received by the `EventListener`.
 <!-- -->
 - [Install the TriggerTemplate, TriggerBinding and EventListener](./triggers.yaml)
-  -  First, **edit** the `triggers.yaml` file to reflect
-    - The Docker repository to push the image blob
-      - You will the `DOCKERREPO-REPLACEME` string everywhere it is needed.
+  -  First, **edit** the `triggers.yaml` file to reflect the Docker repository you wish to push the image blob to.
+    - You will need to replace the `DOCKERREPO-REPLACEME` string everywhere it is needed.
   - Once you have updated the triggers file, you can apply it!
-  - `kubectl apply -f ./docs/getting-started/triggers.yaml`
+    - `kubectl apply -f ./docs/getting-started/triggers.yaml`
   - If that succeeded, your cluster is ready to start handling Events.
 
 ## Configure GitHub Webhook
@@ -61,7 +60,7 @@ Because we are defining our EventListener's Spec as Public, we can expect to see
 - Establish your inbound EXTERNAL-URL hostname:
   - In order to accept GitHub webhook payloads, our listener must be reachable from the internet.
   - Our EventListener will create a [Service](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) for us, so we just need to determine the ingress hostname from the output of the Service. How the loadbalancer gets created will depend on how you are deploying this getting-started - AWS will behave differently than GCP, and so on.
-  - Inspect the output of `k get service/getting-started-listener -n getting-started -o yaml` - there should be a hostname associated with the ingress now.
+  - Inspect the output of `kubectl get service/getting-started-listener -n getting-started -o yaml` - there should be a hostname associated with the ingress now.
   - This command should retrieve your hostname: `k get service/getting-started-listener -n getting-started -o json | jq ".status.loadBalancer.ingress[0].hostname"`
 
 Now configure GitHub webhooks to send *push* events to your clusters Loadbalancer ingress hostname.
@@ -79,7 +78,7 @@ Make sure to set `push` events as the type of events you want to send - push is 
 ## Watch it work!
 
 - Commit and push an empty commit to your development repo:
-  - `git commit -a -m"build commit" --allow-empty && git push origin mybranch`
+  - `git commit -a -m "build commit" --allow-empty && git push origin mybranch`
 - Now, you can follow the Task output in `kubectl logs`:
   - First the image builder task:
     - `kubectl logs -l somelabel=somekey --all-containers`

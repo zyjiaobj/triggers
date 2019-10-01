@@ -6,16 +6,16 @@ spec:
   inputs:
     params:
     - name: CreateCertificate
-      description: Create certificate
+      description: Determines whether to create an SSL certificate
       default: "true"
     - name: CreateIngress
-      description: Create ingress
+      description: Determines whether to create ingress
       default: "true"
     - name: CreateWebhook
-      description: Create webhook
+      description: Determines whether to create webhook
       default: "true"
     - name: CreateEventListener
-      description: Create event listener
+      description: Determines whether to create event listener
       default: "true"
     - name: CertificateKeyPassphrase
       description: The phrase that protects private key
@@ -33,7 +33,7 @@ spec:
       description: The github repo name
       default: "repo"
     - name: GithubSecretName
-      description: The secret name for github
+      description: The secret name for github access token
       default: "githubsecret"
     - name: GithubAccessTokenKey
       description: The key name for access token

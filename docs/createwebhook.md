@@ -1,13 +1,14 @@
 # Create Webhook Tekton Task
-The create webhook task configures necessary componetns for the github webhook sending event to the event listener.
-It configures following compoments:
+The create webhook task configures all of the components necessary to create a Github webhook and have it recieved by the `EventListener`.
+This includes the following components, which can be toggled via the `create-webhook` input Params:
 
-1. The github webhook
-1. Tekton event listener
-1. Ingress for the event listener
-1. Selfsigned certificate for the ingress
+- CreateCertificate - Determines whether to create a self-signed SSL certificate for Github to POST to.
+- CreateIngress - Determines whether to create an ingress so requests can enter the cluster from the public internet.
+- CreateWebhook - Determines whether to create a new Github webhook.
+- CreateEventListener - If the task should create the EventListener as well.
 
-There are options to enable / disable the configuration of the components.
+## RBAC
+
 This task requires the following permissions to execute.  The clusterrole with these permissions must be bound to the service account used to run this task (taskrun).
 
 ```
@@ -43,8 +44,7 @@ This task requires the following permissions to execute.  The clusterrole with t
   - update
 ```
 
-This task always mounts the secret specified in `GithubSecretName`.  It must be created before the task is run.  The contents can be dummy values if the webhook does not need to be created.  
-
+This task always mounts the secret specified in `GithubSecretName`.  It must be created before the task is run. The contents can be dummy values if the webhook does not need to be created.
 
 ## Task params
 
@@ -82,23 +82,23 @@ These are the task parms to manage the task execution
   This param is the github repo name (github.com/onwer/**repo**)
   - value: string
 - name: `GithubSecretName`
-  This param is the secret name for github access token. The key **userName** must have the github user name and **accessToken** must have the github access token.  If the secret has the key **secretString**, the value is set to the `Secret` in the github webhook.  
+  This param is the secret name for github access token. The key **userName** must have the github user name and **accessToken** must have the github access token.  If the secret has the key **secretString**, the value is set to the `Secret` in the github webhook
   - value: kubernetes secret name string
 - name: `GithubUrl`
-  This param is the github side address.  The defult value **github.com** works for the public git hub.  For the github enterprize, this param have to have the site address.  Example: **github.yourcompany.com**   
+  This param is the github side address.  The defult value **github.com** works for the public git hub.  For the github enterprize, this param have to have the site address.  Example: **github.yourcompany.com**
   - value: github site address string
   - default: "github.com"
 - name: `EventListenerName`
-  This param has the event listener name 
+  This param has the event listener name
   - value: valid kubernates identifier string
 - name: `TriggerBinding`
-  This param is the trigger binding set in the event listener 
+  This param is the trigger binding set in the event listener
   - value: triggerbinding CR instance name
 - name: `TriggerTemplate`
-  This param has the trigger template set in the event listener 
+  This param has the trigger template set in the event listener
   - value: triggertemplate CR instance name
 - name: `TriggerServiceAccount`
-  This param is the service account name set in the event listener 
+  This param is the service account name set in the event listener
   - value: service account name
 
 ### Create Certificate
@@ -110,9 +110,9 @@ The following task params must be set for the creation of the certificate.
 - `CreateCertificate`
   value: "true"
 - `CertificateKeyPassphrase`
-  value: any passphrase string  
+  value: any passphrase string
 - `CertificateSecretName`
-  value: valid kubernates identifier string. (unused name) 
+  value: valid kubernates identifier string. (unused name)
 - `ExternalUrl`
   value: IP address for the identity for the site (event listener)
 

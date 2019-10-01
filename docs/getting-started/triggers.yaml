@@ -18,8 +18,6 @@ spec:
       metadata:
         name: source-repo-$(uid)
         namespace: $(params.namespace)
-        labels:
-          triggertemplated: "true"
       spec:
         type: git
         params:
@@ -32,8 +30,6 @@ spec:
       metadata:
         name: image-source-$(uid)
         namespace: $(params.namespace)
-        labels:
-          triggertemplated: "true"
       spec:
         type: image
         params:
@@ -44,8 +40,6 @@ spec:
       metadata:
         name: event-to-sink-$(uid)
         namespace: $(params.namespace)
-        labels:
-          triggertemplated: "true"
       spec:
         type: cloudEvent
         params:
@@ -56,8 +50,6 @@ spec:
       metadata:
         name: getting-started-pipeline-run-$(uid)
         namespace: $(params.namespace)
-        labels:
-          triggertemplated: "true"
       spec:
         serviceAccount: tekton-triggers-admin
         pipelineRef:
