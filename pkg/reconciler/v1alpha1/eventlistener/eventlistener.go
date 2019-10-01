@@ -146,12 +146,16 @@ func reconcileObjectMeta(oldMeta *metav1.ObjectMeta, newMeta metav1.ObjectMeta) 
 }
 
 func (c *Reconciler) reconcileService(el *v1alpha1.EventListener) error {
+	serviceType := corev1.ServiceTypeClusterIP
+	if el.Spec.Public {
+		serviceType = corev1.ServiceTypeLoadBalancer
+	}
 	service := &corev1.Service{
 		ObjectMeta: GeneratedObjectMeta(el),
 		Spec: corev1.ServiceSpec{
 			Selector: mergeLabels(el.Labels, GeneratedResourceLabels),
 			// Cannot be changed
-			Type: corev1.ServiceTypeClusterIP,
+			Type: serviceType,
 			Ports: []corev1.ServicePort{
 				servicePort,
 			},

@@ -52,6 +52,7 @@ type EventListener struct {
 type EventListenerSpec struct {
 	ServiceAccountName string                 `json:"serviceAccountName"`
 	Triggers           []EventListenerTrigger `json:"triggers"`
+	Public             bool                   `json:"public"`
 }
 
 // EventListenerTrigger represents a connection between TriggerBinding, Params,

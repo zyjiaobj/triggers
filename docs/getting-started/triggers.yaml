@@ -93,6 +93,7 @@ metadata:
   name: getting-started-listener
   namespace: getting-started
 spec:
+  public: true # this is new
   serviceAccountName: task-admin
   triggers:
     - binding:
