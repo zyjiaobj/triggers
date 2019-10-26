@@ -6,7 +6,10 @@ spec:
   params:
   - name: gitrevision
     value: $(body.head_commit.id)
+  - name: gittag
+    value: $(body.head_commit.message)
   - name: gitrepositoryurl
     value: $(body.repository.url)
   - name: contenttype
     value: $(header.Content-Type)
+  

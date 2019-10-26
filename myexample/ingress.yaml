@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: el-my-listener.zhanggbj-knative.us-south.containers.appdomain.cloud
+  - host: el-my-listener.${your-domain}
     http:
       paths:
       - backend:

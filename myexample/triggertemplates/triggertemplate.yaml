@@ -7,6 +7,9 @@ spec:
   - name: gitrevision
     description: The git revision
     default: master
+  - name: gittag
+    description: The git tag
+    default: latest
   - name: gitrepositoryurl
     description: The git repository url
   - name: message
@@ -18,14 +21,14 @@ spec:
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineResource
     metadata:
-      name: picalc-git
+      name: picalc-git-$(uid)
     spec:
       type: git
       params:
         - name: revision
-          value: master
+          value: $(params.gitrevision)
         - name: url
-          value: https://github.com/IBM/tekton-tutorial
+          value: $(params.gitrepositoryurl)
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineRun
     metadata:
@@ -36,13 +39,13 @@ spec:
       resources:
         - name: git-source
           resourceRef:
-            name: picalc-git
+            name: picalc-git-$(uid)
       params:
         - name: pathToYamlFile
           value: "knative/picalc.yaml"
         - name: imageUrl
           value: us.icr.io/zhanggbj-cr/picalc
         - name: imageTag
-          value: "1.0"
+          value: $(params.gittag)
       serviceAccount: pipeline-account
 
